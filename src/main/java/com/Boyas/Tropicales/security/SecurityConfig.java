@@ -1,5 +1,6 @@
 package com.Boyas.Tropicales.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -13,20 +14,26 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
+	
+	@Autowired
+	private JWTutils jwTutils;
+	
+	
 	@Bean
 	public SecurityFilterChain securityFilterChain (HttpSecurity security) throws Exception {
 		return security.csrf(csrf -> csrf.disable())
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authorizeHttpRequests(http ->{
-				http.requestMatchers(HttpMethod.POST, "/auth").permitAll();
-				http.requestMatchers(HttpMethod.POST, "").hasAnyRole("ADMIN");
-				http.requestMatchers(HttpMethod.DELETE, "").hasAnyAuthority("DELETE");
+				http.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
+				http.requestMatchers(HttpMethod.POST, "/obtenerRegistro").hasAnyRole("ADMIN");
+				http.requestMatchers(HttpMethod.DELETE, "/obtenerRegistro").hasAnyAuthority("DELETE");
 				http.anyRequest().authenticated();})
+				.addFilterBefore(new JWTokenValidator(jwTutils), BasicAuthenticationFilter.class)
 				.build();
 	}
 	

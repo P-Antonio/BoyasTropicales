@@ -36,7 +36,7 @@ public class Role {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "Roles")
 	private EnumRole roles;
-	@ManyToMany(targetEntity = Authority.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "rol_authorizacion", joinColumns = @JoinColumn (name = "id-rol"), inverseJoinColumns = @JoinColumn(name = "id_Autorizacion"))
 	private Set<Authority> authorizations;
  	

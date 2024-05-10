@@ -3,12 +3,14 @@ package com.Boyas.Tropicales.Imp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.Boyas.Tropicales.Entity.Ventas;
 import com.Boyas.Tropicales.Reposiory.VentasRepository;
 import com.Boyas.Tropicales.Service.VentasService;
 
+@Service
 public class VentasImp implements VentasService{
 
 	@Autowired

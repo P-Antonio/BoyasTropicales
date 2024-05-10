@@ -2,12 +2,14 @@ package com.Boyas.Tropicales.Imp;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.Boyas.Tropicales.Entity.Cosechador;
 import com.Boyas.Tropicales.Reposiory.CosechadorRepository;
 import com.Boyas.Tropicales.Service.CosechadorService;
 
+@Service
 public class CosechadorImp implements CosechadorService {
 
 	
