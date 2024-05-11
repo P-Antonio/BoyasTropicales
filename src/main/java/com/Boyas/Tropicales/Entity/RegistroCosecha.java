@@ -6,6 +6,7 @@ import java.util.Date;
 
 import com.Boyas.Tropicales.Entity.Enums.EnumArandanos;
 import com.Boyas.Tropicales.Entity.Enums.EnumModulos;
+import com.Boyas.Tropicales.controller.DTO.cosecha.ActualizarDatosCosecha;
 import com.Boyas.Tropicales.controller.DTO.cosecha.DatosCosecha;
 
 import jakarta.persistence.Column;
@@ -49,5 +50,14 @@ public class RegistroCosecha {
 		this.kilogramosCosechados = datosCosecha.KilogramosCosechados();
 		this.modulos = datosCosecha.modulos();
 		this.tipoArandano = datosCosecha.tipoArandano();
+	}
+
+	public void actualizarRegistro (@Valid ActualizarDatosCosecha actualizar) {
+		if(actualizar.modulos() != null) {
+			this.modulos = actualizar.modulos();
+		}
+		if(actualizar.tipoArandano() != null) {
+			this.tipoArandano = actualizar.tipoArandano();
+		}
 	}
 }

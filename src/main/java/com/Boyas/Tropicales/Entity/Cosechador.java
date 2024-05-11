@@ -2,6 +2,8 @@ package com.Boyas.Tropicales.Entity;
 
 import java.util.Date;
 
+import com.Boyas.Tropicales.controller.DTO.cosecha.CrearCosechador;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -43,4 +46,12 @@ public class Cosechador {
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "Registro_Cosecha")
 	private RegistroCosecha rCosecha;
+	
+	public Cosechador(@Valid CrearCosechador cosechador) {
+		this.nombre = cosechador.nombre();
+		this.apellido = cosechador.apellido();
+		this.cedula = cosechador.cedula();
+		this.fechaNaciemiento = cosechador.fechaNacimiento();
+		this.fechaInicioContrato = cosechador.fechaInicioContrato();
+	}
 }
