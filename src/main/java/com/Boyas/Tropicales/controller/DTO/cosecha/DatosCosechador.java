@@ -4,8 +4,6 @@ import java.util.Date;
 
 import com.Boyas.Tropicales.Entity.Cosechador;
 
-import jakarta.validation.constraints.NotBlank;
-
 public record DatosCosechador(String nombre,String apellido, Integer cedula, Date fechaNacimiento, Date fechaInicioContrato, Date fechaTerminoContrato) {
 
 	public DatosCosechador(Cosechador cosechador) {
