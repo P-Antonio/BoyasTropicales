@@ -16,6 +16,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.Boyas.Tropicales.Entity.Ventas;
 import com.Boyas.Tropicales.Service.VentasService;
+import com.Boyas.Tropicales.controller.DTO.cosecha.ActualizarVenta;
+import com.Boyas.Tropicales.controller.DTO.cosecha.CrearVenta;
+import com.Boyas.Tropicales.controller.DTO.cosecha.ObtenerVentas;
+import com.Boyas.Tropicales.controller.DTO.cosecha.RetornoVentas;
 
 import jakarta.validation.Valid;
 
@@ -27,31 +31,37 @@ public class VentasController {
 	private VentasService ventasService;
 	
 	@GetMapping
-	public ResponseEntity<Page<T>> obtenerTodasLasVentas(@PageableDefault(size = 4, sort = {"id"}) Pageable paginacion){
+	public ResponseEntity<Page<ObtenerVentas>> obtenerTodasLasVentas(@PageableDefault(size = 4, sort = {"id"}) Pageable paginacion){
+		var page = ventasService.findByEntregadoTrue(paginacion).map(ObtenerVentas :: new);
 		
+		return ResponseEntity.ok(page);
 	}
 	
 	@GetMapping("{id}")
 	public ResponseEntity<?> obtenerUnaVenta(){
 		
 	}
-
+	
 	@PostMapping
 	public ResponseEntity<?> crearVenta(@PathVariable @Valid CrearVenta crearVenta, UriComponentsBuilder componetBuilder){
 	Ventas ventas = new Ventas(crearVenta);
 	ventasService.save(ventas);
 	
-	var uri = componetBuilder.path("").buildAndExpand(null).toUri();
-	return ResponseEntity.created(uri).body();
+	var uri = componetBuilder.path("ventas/{id}").buildAndExpand(ventas.getId()).toUri();
+	return ResponseEntity.created(uri).body(new RetornoVentas(ventas));
 	}
 	
 	@PutMapping ("{id}")
-	public ResponseEntity<?>actualizarVenta (){
-	
+	public ResponseEntity<?>actualizarVenta (@PathVariable ActualizarVenta actualizar){
+		var ventaActualizada = ventasService.findById(actualizar.id());
+		ventaActualizada.actualizar(actualizar);
+		
+		return ResponseEntity.ok(new RetornoVentas(ventaActualizada));
 	}
 
 	@DeleteMapping("{id}")
-	public ResponseEntity<?> eliminarVenta(){
-	
+	public ResponseEntity<?> eliminarVenta(@PathVariable Long id){
+		ventasService.deleteById(id);
+		return ResponseEntity.noContent().build();
 	}
 }

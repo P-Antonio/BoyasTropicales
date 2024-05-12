@@ -44,7 +44,7 @@ public class CosechadorController {
 		var guardarCosechador = new Cosechador(cosechador); 
 		cosechadorService.save(guardarCosechador);
 		
-		var uri = componentsBuilder.path("cosechadorCreado/{id}").buildAndExpand(guardarCosechador.getId()).toUri();
+		var uri = componentsBuilder.path("cosechador/{id}").buildAndExpand(guardarCosechador.getId()).toUri();
 		return ResponseEntity.created(uri).body(new DatosCosechador(guardarCosechador));
 	}
 	
