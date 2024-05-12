@@ -1,8 +1,8 @@
 package com.Boyas.Tropicales.controller;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,12 +27,12 @@ public class CosechadorController {
 	@Autowired
 	private CosechadorService cosechadorService;
 	
-	@GetMapping
+	@GetMapping("/getCosechador")
 	public ResponseEntity<?> obtenerCosechadores (){
 		return ResponseEntity.ok(cosechadorService.findAll());
 	}
 	
-	@GetMapping("{id}")
+	@GetMapping("getCosechador/{id}")
 	public ResponseEntity<?> obtenerCosechadorById (@PathVariable Long id){
 		var idCosechador = cosechadorService.findById(id);
 		
@@ -48,10 +48,18 @@ public class CosechadorController {
 		return ResponseEntity.created(uri).body(new DatosCosechador(guardarCosechador));
 	}
 	
-	@PutMapping
+	@PutMapping("/actualizar")
 	public ResponseEntity<?> actualizarCosechador (@RequestBody ActualizarCosechador actualizar){
 		var cosechador = cosechadorService.findById(actualizar.id());
 		cosechador.actualizarDatos(actualizar);
 		return ResponseEntity.ok(new DatosCosechador(cosechador));
+	}
+	
+	@DeleteMapping("/eliminar/{id}")
+	public ResponseEntity<?> eliminarCosechador (@PathVariable Long id){
+		var eliminar = cosechadorService.findById(id);
+		eliminar.inhabilitar();
+		
+		return ResponseEntity.noContent().build();
 	}
 }
