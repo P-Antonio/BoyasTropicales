@@ -9,7 +9,8 @@ import com.Boyas.Tropicales.Entity.Cosechador;
 public interface CosechadorService {
 
 	List<Cosechador> findAll();
-	Cosechador findById(Long id);
+	Cosechador findById (Long id);
+	Cosechador findByCedula(Integer cedula);
 	void save (Cosechador cosechador);
 	void deleteById (Long id);
 }

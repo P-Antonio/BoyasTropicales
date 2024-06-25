@@ -38,8 +38,9 @@ public class VentasController {
 	}
 	
 	@GetMapping("{id}")
-	public ResponseEntity<?> obtenerUnaVenta(){
-		
+	public ResponseEntity<?> obtenerUnaVenta(@PathVariable Long id){
+		var ventaId = ventasService.findById(id);
+		return ResponseEntity.ok(new RetornoVentas(ventaId));
 	}
 	
 	@PostMapping

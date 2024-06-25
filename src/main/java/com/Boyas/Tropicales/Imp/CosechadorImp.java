@@ -21,11 +21,17 @@ public class CosechadorImp implements CosechadorService {
 	public List<Cosechador> findAll() {
 		return cosechadorRepository.findAll();
 	}
-
+	
 	@Override
 	@Transactional (readOnly = true)
 	public Cosechador findById(Long id) {
 		return cosechadorRepository.findById(id).orElseThrow();
+	}
+
+	@Override
+	@Transactional (readOnly = true)
+	public Cosechador findByCedula(Integer cedula) {
+		return cosechadorRepository.findByCedula(cedula).orElseThrow();
 	}
 
 	@Override
@@ -41,5 +47,7 @@ public class CosechadorImp implements CosechadorService {
 		cosechadorRepository.deleteById(id);
 		
 	}
+
+
 
 }

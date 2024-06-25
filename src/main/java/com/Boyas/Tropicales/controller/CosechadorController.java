@@ -33,10 +33,10 @@ public class CosechadorController {
 	}
 	
 	@GetMapping("getCosechador/{id}")
-	public ResponseEntity<?> obtenerCosechadorById (@PathVariable Long id){
-		var idCosechador = cosechadorService.findById(id);
+	public ResponseEntity<?> obtenerCosechadorById (@PathVariable Integer cedula){
+		var ccCosechador = cosechadorService.findByCedula(cedula);
 		
-		return ResponseEntity.ok(new DatosCosechador(idCosechador));
+		return ResponseEntity.ok(new DatosCosechador(ccCosechador));
 	}
 	
 	@PostMapping("/crear")
